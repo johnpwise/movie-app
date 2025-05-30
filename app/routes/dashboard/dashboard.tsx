@@ -1,8 +1,8 @@
-import { useMovieStore } from "../stores/useMovieStore";
+import { useMovieStore } from "../../stores/useMovieStore";
 
 /// Components
-import Tile from "../features/dashboard/tiles/tile";
-import MovieTile from "../components/tiles/movieTile/movieTile";
+import Tile from "../../features/dashboard/tiles/tile";
+import MovieTile from "../../components/tiles/movieTile/movieTile";
 
 export async function loader() {
     // e.g. const stats = await fetchStats()

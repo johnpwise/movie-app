@@ -1,14 +1,14 @@
 import { useState } from 'react';
 
 /// Stores
-import { useActorStore } from '../stores/useActorStore';
+import { useActorStore } from '../../stores/useActorStore';
 
 /// Types
-import type { IActor } from '../features/actors/types';
+import type { IActor } from '../../features/actors/types';
 
 /// Components
 import BaseButton from '~/components/buttons/baseButton';
-import BaseModal from '../components/modals/baseModal';
+import BaseModal from '../../components/modals/baseModal';
 
 /// Initial actor state
 const initialActor: IActor = {

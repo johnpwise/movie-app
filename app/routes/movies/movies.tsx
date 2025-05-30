@@ -1,17 +1,17 @@
 import { useState } from 'react';
 
 /// Stores
-import { useMovieStore } from '../stores/useMovieStore';
+import { useMovieStore } from '../../stores/useMovieStore';
 
 /// Types
-import type { IMovie } from '../features/movies/types';
+import type { IMovie } from '../../features/movies/types';
 
 /// Components
 import BaseButton from '~/components/buttons/baseButton';
 
-import MovieList from '../features/movies/movieList/movieList';
-import BaseModal from '../components/modals/baseModal';
-import UpsertMovieForm from '../features/movies/upsertMovieForm/upsertMovieForm';
+import MovieList from '../../features/movies/movieList/movieList';
+import BaseModal from '../../components/modals/baseModal';
+import UpsertMovieForm from '../../features/movies/upsertMovieForm/upsertMovieForm';
 
 /// Initial movie state
 const initialMovie: IMovie = {
