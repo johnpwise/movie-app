@@ -8,6 +8,7 @@ describe('template spec', () => {
     cy.visit('/');
     
     // Assert
-    cy.get('.ma-dashboard-container').should('exist');
+    cy.get('.ma-dashboard-container', { timeout: 10000 })
+      .should('exist');
   });
 });

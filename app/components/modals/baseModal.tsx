@@ -28,7 +28,7 @@ function BaseModal({
         <div
             data-id={dataId}
             className="modal show"
-            style={{ display: 'block', position: 'initial' }}
+            style={{ position: 'initial' }}
         >
             <Modal show={showModal} onHide={handleClose}>
                 <Modal.Header closeButton>
