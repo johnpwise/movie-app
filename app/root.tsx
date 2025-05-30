@@ -5,9 +5,12 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-} from "react-router";
+} from "react-router-dom";
 
 import type { Route } from "./+types/root";
+
+import NavMenu from "./components/navigation/navMenu";
+
 import "./app.css";
 
 export const links: Route.LinksFunction = () => [
@@ -33,6 +36,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
+        <NavMenu />
         {children}
         <ScrollRestoration />
         <Scripts />
@@ -62,7 +66,7 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   }
 
   return (
-    <main className="pt-16 p-4 container mx-auto">
+    <main className="pt-16 p-4 ml-[200px] container">
       <h1>{message}</h1>
       <p>{details}</p>
       {stack && (

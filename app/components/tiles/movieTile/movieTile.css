@@ -1,0 +1,41 @@
+.ma-movie-tile-container {
+    @apply flex flex-col gap-4;
+    border: 1px solid grey;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
+    width: 12rem;
+}
+
+.ma-movie-title {
+    @apply flex flex-col gap-2 p-4 rounded-lg bg-white dark:bg-gray-800;
+    border: 1px solid #e5e7eb;
+}
+
+.ma-movie-details {
+    @apply flex-1;
+    padding-left: 1rem;
+}
+
+.ma-movie-year {
+    @apply text-sm text-gray-500 dark:text-gray-400;
+}
+
+.ma-movie-studio {
+    @apply text-sm text-gray-500 dark:text-gray-400;
+}
+
+.ma-movie-rating {
+    @apply text-sm text-gray-500 dark:text-gray-400;
+}
+
+.ma-movie-actions {
+    @apply flex justify-center items-center p-2;
+}
+
+.ma-watched-status {
+    @apply text-sm text-gray-500 dark:text-gray-400;
+}
+
+.ma-unwatched-status {
+    @apply text-sm text-gray-500 dark:text-gray-400;
+}

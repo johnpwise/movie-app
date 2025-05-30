@@ -1,0 +1,21 @@
+.ma-tile-container {
+    @apply flex flex-col gap-4;
+    border: 1px solid grey;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
+    width: 12rem;
+}
+
+.ma-title {
+    @apply flex flex-col gap-2 p-4 rounded-lg bg-white dark:bg-gray-800;
+    border: 1px solid #e5e7eb;
+}
+
+.ma-tile-content {
+    @apply flex-1;
+    padding-left: 1rem;
+}
+
+.ma-tile-actions {
+    @apply flex justify-center items-center p-2;
+}

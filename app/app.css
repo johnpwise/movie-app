@@ -1,5 +1,31 @@
 @import "tailwindcss";
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Bootstrap */
+@import 'bootstrap/dist/css/bootstrap.min.css';
+@import 'bootstrap-icons/font/bootstrap-icons.css';
+
+/* Common Components */
+@import "./components/navigation/navMenu.css";
+@import "./components/inputs/dropdowns/dropdown.css";
+@import "./components/modals/baseModal.css";
+@import "./components/tiles/movieTile/movieTile.css";
+
+
+/* Dashboard */
+@import "./routes/dashboard.css";
+@import "./features/dashboard/tiles/tile.css";
+
+/* Features */
+@import "./routes/movies.css";
+@import "./features/movies/upsertMovieForm/upsertMovieForm.css";
+@import "./features/movies/movieList/movieList.css";
+
+@import "./routes/actors.css";
+
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
