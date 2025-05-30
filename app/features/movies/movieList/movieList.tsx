@@ -3,6 +3,9 @@ import { useEffect, useState } from 'react';
 /// Stores
 import { useMovieStore } from '../../../stores/useMovieStore';
 
+/// Services
+import { getAllMoviesAsync } from '../../../services/movieService';
+
 /// Types
 import type { IMovie } from '../types';
 
@@ -17,9 +20,8 @@ interface MovieListProps {
 
 function MovieList({ onSelect }: MovieListProps) {
     /// Store
-    const movies = useMovieStore(state => state.movies);
-    const remove = useMovieStore(state => state.remove);
-    const fetchFromApi = useMovieStore(state => state.fetchFromApi);
+    const [movies, setMovies] = useState<IMovie[]>([]);
+    const removeMovieAsync = useMovieStore(state => state.removeMovieAsync);
 
     /// UI State
     const [loading, setLoading] = useState(true);
@@ -27,19 +29,20 @@ function MovieList({ onSelect }: MovieListProps) {
 
     /// Effects
     useEffect(() => {
-        fetchFromApi()
-            .catch(err => setError(err.message))
+        getAllMoviesAsync()
+            .then(setMovies)
+            .catch((err) => setError(err.message))
             .finally(() => setLoading(false));
-    }, [fetchFromApi]);
+    }, []);
 
     /// Handlers
     const handleRemove = async (id: string, e: React.MouseEvent) => {
         e.stopPropagation();
         try {
-            await remove(id);
+            await removeMovieAsync(id);
         } catch (err) {
-            console.error('Failed to remove movie:', err);
-            setError('Failed to remove movie');
+            console.error('Failed to removeMovieAsync movie:', err);
+            setError('Failed to removeMovieAsync movie');
         }
     };
 
@@ -115,7 +118,7 @@ function MovieList({ onSelect }: MovieListProps) {
                                     variant="danger"
                                     icon="bi-trash"
                                     text="Remove"
-                                    dataId={`ma-remove-movie-${movie.id}`}
+                                    dataId={`ma-removeMovieAsync-movie-${movie.id}`}
                                     onClick={(e) => handleRemove(movie.id, e)}
                                 />
                             </td>

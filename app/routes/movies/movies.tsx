@@ -27,8 +27,8 @@ function Movies() {
     /// State
     const [showModal, setShowModal] = useState(false);
     const [movie, setMovie] = useState<IMovie>(initialMovie);
-    const add = useMovieStore(state => state.add);
-    const update = useMovieStore(state => state.update);
+    const addMovieAsync = useMovieStore(state => state.addMovieAsync);
+    const updateMovieAsync = useMovieStore(state => state.updateMovieAsync);
 
     /// Handlers
     const handleClose = () => setShowModal(false);
@@ -40,9 +40,9 @@ function Movies() {
 
     const handleSave = () => {
         if (movie.id) {
-            update(movie);
+            updateMovieAsync(movie);
         } else {
-            add({ ...movie, id: crypto.randomUUID() });
+            addMovieAsync({ ...movie, id: crypto.randomUUID() });
         }
 
         handleClose();

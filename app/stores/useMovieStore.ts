@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 /// Services
-import { getAllMovies, addMovie, updateMovie, deleteMovie } from '../services/movieService';
+import { getAllMoviesAsync, addMovieAsync, updateMovieAsync, deleteMovieAsync } from '../services/movieService';
 
 /// Types
 import type { IMovie } from '../features/movies/types';
@@ -11,15 +11,15 @@ interface MovieStore {
     movies: IMovie[];
 
     // Mutators
-    add: (m: IMovie) => Promise<void>;
-    remove: (id: string) => Promise<void>;
-    update: (updated: IMovie) => Promise<void>;
+    addMovieAsync: (m: IMovie) => Promise<void>;
+    removeMovieAsync: (id: string) => Promise<void>;
+    updateMovieAsync: (updated: IMovie) => Promise<void>;
 
     // Bulk setter
     set: (ms: IMovie[]) => void;
 
     // Sync from API
-    fetchFromApi: () => Promise<void>;
+    getAllMoviesAsync: () => Promise<void>;
 }
 
 export const useMovieStore = create<MovieStore>()(
@@ -27,18 +27,18 @@ export const useMovieStore = create<MovieStore>()(
         (set, get) => ({
             movies: [],
 
-            fetchFromApi: async () => {
+            getAllMoviesAsync: async () => {
                 try {
-                    const data = await getAllMovies();
+                    const data = await getAllMoviesAsync();
                     set({ movies: data });
                 } catch (err) {
                     console.error('Failed to fetch movies:', err);
                 }
             },
 
-            add: async (movie) => {
+            addMovieAsync: async (movie) => {
                 try {
-                    const { id } = await addMovie(movie);
+                    const { id } = await addMovieAsync(movie);
                     const newMovie = { ...movie, id };
                     set((state) => ({
                         movies: [...state.movies, newMovie]
@@ -48,9 +48,9 @@ export const useMovieStore = create<MovieStore>()(
                 }
             },
 
-            remove: async (id) => {
+            removeMovieAsync: async (id) => {
                 try {
-                    await deleteMovie(id);
+                    await deleteMovieAsync(id);
                     set((s) => ({
                         movies: s.movies.filter((m) => m.id !== id)
                     }));
@@ -59,16 +59,16 @@ export const useMovieStore = create<MovieStore>()(
                 }
             },
 
-            update: async (updated) => {
+            updateMovieAsync: async (updated) => {
                 try {
-                    await updateMovie(updated);
+                    await updateMovieAsync(updated);
                     set((s) => ({
                         movies: s.movies.map((m) =>
                             m.id === updated.id ? updated : m
                         )
                     }));
                 } catch (err) {
-                    console.error('Failed to update movie:', err);
+                    console.error('Failed to updateMovieAsync movie:', err);
                 }
             },
 

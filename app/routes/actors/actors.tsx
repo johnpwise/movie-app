@@ -21,7 +21,7 @@ function Actors() {
     const [showModal, setShowModal] = useState(false);
     const [actor, setActor] = useState<IActor>(initialActor);
     const add = useActorStore(state => state.add);
-    const update = useActorStore(state => state.update);
+    const updateMovieAsync = useActorStore(state => state.updateMovieAsync);
     // const actors = useActorStore(state => state.actors);
 
     /// Handlers
@@ -34,7 +34,7 @@ function Actors() {
 
     const handleSave = () => {
         if (actor.id) {
-            update(actor);
+            updateMovieAsync(actor);
         } else {
             add({ ...actor, id: crypto.randomUUID() });
         }
