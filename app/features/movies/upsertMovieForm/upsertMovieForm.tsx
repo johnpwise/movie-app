@@ -1,13 +1,13 @@
 /// Interfaces
-import type { Movie } from '../types';
+import type { IMovie } from '../types';
 
 // Components
 import Form from 'react-bootstrap/Form';
 import Dropdown from '~/components/inputs/dropdowns/dropdown';
 
 interface UpsertMovieFormProps {
-    movie: Movie;
-    onChange: (movie: Movie) => void;
+    movie: IMovie;
+    onChange: (movie: IMovie) => void;
 }
 
 function UpsertMovieForm({ movie, onChange }: UpsertMovieFormProps) {
