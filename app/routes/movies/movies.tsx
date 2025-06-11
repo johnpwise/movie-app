@@ -27,8 +27,11 @@ function Movies() {
     /// State
     const [showModal, setShowModal] = useState(false);
     const [movie, setMovie] = useState<IMovie>(initialMovie);
+    const [reloadKey, setReloadKey] = useState(0);
     const addMovieAsync = useMovieStore(state => state.addMovieAsync);
     const updateMovieAsync = useMovieStore(state => state.updateMovieAsync);
+
+    const triggerReload = () => setReloadKey(prev => prev + 1);
 
     /// Handlers
     const handleClose = () => setShowModal(false);
@@ -46,6 +49,7 @@ function Movies() {
         }
 
         handleClose();
+        triggerReload();
     };
 
     const handleSelectMovie = (selected: IMovie) => {
@@ -53,15 +57,23 @@ function Movies() {
         setShowModal(true);
     };
 
+    /// Data IDs
+    const dataId = {
+        addButton: 'ma-button-add-movie',
+        modal: 'ma-modal-upsert-movie',
+        title: 'ma-movies-title',
+        description: 'ma-movies-description',
+    };
+
     /// Render
     return (
         <div className="ma-movies">
-            <h1>Movies</h1>
-            <p>Manage your movie collection here.</p>
+            <h1 data-id={dataId.title}>Movies</h1>
+            <p data-id={dataId.description}>Manage your movie collection here.</p>
 
             <BaseButton
                 variant="primary"
-                dataId="ma-button-add-movie"
+                dataId={dataId.addButton}
                 icon="bi-plus-circle"
                 text="Add movie"
                 onClick={handleAddNew}
@@ -70,7 +82,7 @@ function Movies() {
             <hr />
 
             <BaseModal
-                dataId="ma-modal-upsert-movie"
+                dataId={dataId.modal}
                 title={movie.id ? 'Edit Movie' : 'Add Movie'}
                 cancelText="Cancel"
                 saveText="Save"
@@ -81,7 +93,7 @@ function Movies() {
                 <UpsertMovieForm movie={movie} onChange={setMovie} />
             </BaseModal>
 
-            <MovieList onSelect={handleSelectMovie} />
+            <MovieList onSelect={handleSelectMovie} reloadKey={reloadKey} />
         </div>
     );
 }

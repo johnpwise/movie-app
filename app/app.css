@@ -10,10 +10,9 @@
 
 /* Common Components */
 @import "./components/navigation/navMenu.css";
-@import "./components/inputs/dropdowns/dropdown.css";
+@import "./components/inputs/ratingWidget/ratingWidget.css";
 @import "./components/modals/baseModal.css";
 @import "./components/tiles/movieTile/movieTile.css";
-
 
 /* Dashboard */
 @import "./routes/dashboard/dashboard.css";

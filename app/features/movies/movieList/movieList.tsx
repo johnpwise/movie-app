@@ -16,9 +16,10 @@ import BaseBadge from '~/components/badges/baseBadge';
 
 interface MovieListProps {
     onSelect: (movie: IMovie) => void;
+    reloadKey?: number;
 }
 
-function MovieList({ onSelect }: MovieListProps) {
+function MovieList({ onSelect, reloadKey }: MovieListProps) {
     /// Store
     const [movies, setMovies] = useState<IMovie[]>([]);
     const removeMovieAsync = useMovieStore(state => state.removeMovieAsync);
@@ -29,11 +30,12 @@ function MovieList({ onSelect }: MovieListProps) {
 
     /// Effects
     useEffect(() => {
+        setLoading(true);
         getAllMoviesAsync()
             .then(setMovies)
             .catch((err) => setError(err.message))
             .finally(() => setLoading(false));
-    }, []);
+    }, [reloadKey]);
 
     /// Handlers
     const handleRemove = async (id: string, e: React.MouseEvent) => {

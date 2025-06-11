@@ -3,7 +3,8 @@ import type { IMovie } from '../types';
 
 // Components
 import Form from 'react-bootstrap/Form';
-import Dropdown from '~/components/inputs/dropdowns/dropdown';
+import BaseCheckbox from '~/components/inputs/checks/baseCheckbox';
+import RatingWidget from '~/components/inputs/ratingWidget/ratingWidget';
 
 interface UpsertMovieFormProps {
     movie: IMovie;
@@ -57,32 +58,21 @@ function UpsertMovieForm({ movie, onChange }: UpsertMovieFormProps) {
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicWatched">
-                <Form.Check
-                    type="checkbox"
-                    name="watched"
+                <BaseCheckbox
+                    dataId="ma-checkbox-watched"
                     label="Watched"
                     checked={movie.watched || false}
+                    isSwitch={true}
                     onChange={(e) => onChange({ ...movie, watched: e.target.checked })}
                 />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicRating">
-                <Dropdown
-                    dropdownLabel="Select Rating"
-                    options={[
-                        { label: '1 Star', value: 1, selected: movie.rating === 1 },
-                        { label: '2 Stars', value: 2, selected: movie.rating === 2 },
-                        { label: '3 Stars', value: 3, selected: movie.rating === 3 },
-                        { label: '4 Stars', value: 4, selected: movie.rating === 4 },
-                        { label: '5 Stars', value: 5, selected: movie.rating === 5 },
-                        { label: '6 Stars', value: 6, selected: movie.rating === 6 },
-                        { label: '7 Stars', value: 7, selected: movie.rating === 7 },
-                        { label: '8 Stars', value: 8, selected: movie.rating === 8 },
-                        { label: '9 Stars', value: 9, selected: movie.rating === 9 },
-                        { label: '10 Stars', value: 10, selected: movie.rating === 10 },
-                    ]}
-                    isDropdownOpen={false}
-                    onOptionSelect={(option) => onChange({ ...movie, rating: option.value as number })}
+                <RatingWidget
+                    dataId="ma-rating-widget"
+                    rating={movie.rating || 0}
+                    onChange={(rating) => onChange({ ...movie, rating })}
+                    isDisabled={false}
                 />
             </Form.Group>
         </Form>

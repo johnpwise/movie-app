@@ -1,0 +1,6 @@
+.bi-star,
+.bi-star-fill { 
+    color: #f39c12; /* Orange color for the stars */
+    font-size: 24px; /* Size of the stars */
+    cursor: pointer; /* Pointer cursor on hover */
+}

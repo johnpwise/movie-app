@@ -26,11 +26,10 @@ function BaseModal({
     /// Render
     return (
         <div
-            data-id={dataId}
             className="modal show"
             style={{ position: 'initial' }}
         >
-            <Modal show={showModal} onHide={handleClose}>
+            <Modal data-id={dataId} show={showModal} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>{title}</Modal.Title>
                 </Modal.Header>
