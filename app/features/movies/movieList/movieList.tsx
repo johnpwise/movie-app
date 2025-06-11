@@ -37,11 +37,14 @@ function MovieList({ onSelect, reloadKey }: MovieListProps) {
             .finally(() => setLoading(false));
     }, [reloadKey]);
 
+
     /// Handlers
     const handleRemove = async (id: string, e: React.MouseEvent) => {
         e.stopPropagation();
         try {
             await removeMovieAsync(id);
+            await getAllMoviesAsync().then(setMovies);
+            
         } catch (err) {
             console.error('Failed to removeMovieAsync movie:', err);
             setError('Failed to removeMovieAsync movie');

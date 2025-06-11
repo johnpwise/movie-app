@@ -48,8 +48,10 @@ function Movies() {
             addMovieAsync({ ...movie, id: crypto.randomUUID() });
         }
 
-        handleClose();
-        triggerReload();
+        setTimeout(() => {
+            triggerReload();
+            handleClose();
+        }, 100); // Delay to ensure modal closes before reloading
     };
 
     const handleSelectMovie = (selected: IMovie) => {
@@ -78,7 +80,7 @@ function Movies() {
                 text="Add movie"
                 onClick={handleAddNew}
             />
-            
+
             <hr />
 
             <BaseModal

@@ -38,8 +38,8 @@ export const useMovieStore = create<MovieStore>()(
 
             addMovieAsync: async (movie) => {
                 try {
-                    const { id } = await addMovieAsync(movie);
-                    const newMovie = { ...movie, id };
+                    await addMovieAsync(movie);
+                    const newMovie = { ...movie };
                     set((state) => ({
                         movies: [...state.movies, newMovie]
                     }));
