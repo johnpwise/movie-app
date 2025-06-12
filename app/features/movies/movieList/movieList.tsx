@@ -95,7 +95,7 @@ function MovieList({ onSelect, reloadKey }: MovieListProps) {
                         <th>Studio</th>
                         <th>Watched</th>
                         <th>Rating</th>
-                        <th>Actions</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -122,7 +122,6 @@ function MovieList({ onSelect, reloadKey }: MovieListProps) {
                                 <BaseButton
                                     variant="danger"
                                     icon="bi-trash"
-                                    text="Remove"
                                     dataId={`ma-removeMovieAsync-movie-${movie.id}`}
                                     onClick={(e) => handleRemove(movie.id, e)}
                                 />
