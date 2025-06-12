@@ -4,6 +4,9 @@ import { MemoryRouter } from 'react-router';
 // Component Under Test
 import RatingWidget from './ratingWidget';
 
+// CSS
+import './ratingWidget.css';
+
 describe('<RatingWidget />', () => {
     it('should render with the correct props', () => {
         cy.mount(

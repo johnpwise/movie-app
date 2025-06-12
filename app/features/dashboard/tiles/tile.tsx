@@ -9,7 +9,7 @@ function Tile({ title, value, total }: TileProps) {
         <div className="ma-tile-container">
             <h4 className="ma-title">{title}</h4>
             <div className="ma-tile-content">{value} / {total}</div>
-            <div className="ma-tile-actions">&nbsp;</div>
+            <div className="ma-tile-actions"></div>
         </div>
     );
 }

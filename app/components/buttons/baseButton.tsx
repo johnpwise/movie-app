@@ -26,7 +26,7 @@ export default function BaseButton({
             disabled={disabled}
             onClick={onClick}
         >
-            {icon && <i className={`bi ${icon}`} style={{ marginRight: '0.5rem' }}></i>}
+            {icon && <i className={`bi ${icon}`} style={{ marginRight: text ? '0.5rem' : '' }}></i>}
             {text !== '' && text}
         </Button>
     );

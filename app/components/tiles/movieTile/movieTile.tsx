@@ -2,7 +2,7 @@
 import type { IMovie } from '../../../features/movies/types';
 
 /// Components
-import WatchedIcon from '~/components/icons/watchedIcon';
+import WatchedIcon from '../../icons/watchedIcon';
 
 interface MovieTileProps {
     movie: IMovie;

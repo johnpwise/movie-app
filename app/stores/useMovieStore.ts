@@ -8,7 +8,7 @@ import { getAllMoviesAsync, addMovieAsync, updateMovieAsync, deleteMovieAsync } 
 import type { IMovie } from '../features/movies/types';
 
 interface MovieStore {
-    movies: IMovie[];
+    movies: IMovie[] | [];
 
     // Mutators
     addMovieAsync: (m: IMovie) => Promise<void>;
@@ -72,6 +72,7 @@ export const useMovieStore = create<MovieStore>()(
                 }
             },
 
+            get: () => get().movies,
             set: (ms) => set({ movies: ms })
         }),
         {

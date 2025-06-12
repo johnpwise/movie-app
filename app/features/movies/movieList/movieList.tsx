@@ -10,9 +10,9 @@ import { getAllMoviesAsync } from '../../../services/movieService';
 import type { IMovie } from '../types';
 
 /// Components
-import BaseButton from '~/components/buttons/baseButton';
-import WatchedIcon from '~/components/icons/watchedIcon';
-import BaseBadge from '~/components/badges/baseBadge';
+import BaseButton from '../../../components/buttons/baseButton';
+import WatchedIcon from '../../../components/icons/watchedIcon';
+import BaseBadge from '../../../components/badges/baseBadge';
 
 interface MovieListProps {
     onSelect: (movie: IMovie) => void;
@@ -44,7 +44,7 @@ function MovieList({ onSelect, reloadKey }: MovieListProps) {
         try {
             await removeMovieAsync(id);
             await getAllMoviesAsync().then(setMovies);
-            
+
         } catch (err) {
             console.error('Failed to removeMovieAsync movie:', err);
             setError('Failed to removeMovieAsync movie');
@@ -111,7 +111,7 @@ function MovieList({ onSelect, reloadKey }: MovieListProps) {
                                 {movie.rating ? (
                                     <BaseBadge
                                         dataId={`ma-movie-rating-${movie.id}`}
-                                        variant="secondary"
+                                        variant={movie.rating >= 8 ? 'success' : movie.rating >= 5 ? 'warning' : 'danger'}
                                         text={movie.rating.toString()}
                                     />
                                 ) : (

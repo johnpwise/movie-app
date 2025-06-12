@@ -51,7 +51,7 @@ function Movies() {
         setTimeout(() => {
             triggerReload();
             handleClose();
-        }, 100); // Delay to ensure modal closes before reloading
+        }, 100);
     };
 
     const handleSelectMovie = (selected: IMovie) => {
