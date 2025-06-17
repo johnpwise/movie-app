@@ -69,7 +69,7 @@ function Movies() {
 
     /// Render
     return (
-        <div className="ma-movies">
+        <div className="ma-movies text-gray-500 dark:text-gray-300">
             <h1 data-id={dataId.title}>Movies</h1>
             <p data-id={dataId.description}>Manage your movie collection here.</p>
 

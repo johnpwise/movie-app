@@ -58,7 +58,7 @@ function Dashboard() {
 
                 <div>
                     {movies.length > 0 ? (
-                        <div className="ma-movie-list-container">
+                        <div className="ma-movie-grid-container">
                             {movies.map(movie => (
                                 <MovieTile key={movie.id} movie={movie} />
                             ))}

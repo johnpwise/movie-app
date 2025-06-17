@@ -4,11 +4,20 @@ describe('Upsert Movies Modal', () => {
         cy.clearLocalStorage();
         // Optionally, you can also clear cookies if needed
         cy.clearCookies();
+
+        cy.intercept('GET', '/api/movies', {
+            statusCode: 200,
+            body: []
+        }).as('getMovies');
+
         // Visit the base URL before each test
         cy.visit('/movies');
     });
 
     it('should open the upsert movie modal when "Add Movie" button is clicked', () => {
+        // Arrange
+        cy.wait('@getMovies');
+        
         // Click the "Add Movie" button
         cy.get('[data-id="ma-button-add-movie"]').click();
 
@@ -19,6 +28,9 @@ describe('Upsert Movies Modal', () => {
     });
 
     it('should close the modal when the close button is clicked', () => {
+        // Arrange
+        cy.wait('@getMovies');
+
         // Open the modal first
         cy.get('[data-id="ma-button-add-movie"]').click();
 
@@ -31,6 +43,9 @@ describe('Upsert Movies Modal', () => {
     });
 
     it('should close the modal when the cancel button is clicked', () => {
+        // Arrange
+        cy.wait('@getMovies');
+
         // Open the modal first
         cy.get('[data-id="ma-button-add-movie"]').click();
 
@@ -44,12 +59,6 @@ describe('Upsert Movies Modal', () => {
 
     context('when adding a new movie', () => {
         beforeEach(() => {
-            // Setup the intercept for get all movies API call
-            cy.intercept('GET', '/api/movies', {
-                statusCode: 200,
-                body: []
-            }).as('getMovies');
-
             // Wait for the movies to be loaded
             cy.wait('@getMovies');
         });
@@ -130,17 +139,21 @@ describe('Upsert Movies Modal', () => {
 
         it('should allow entering movie details and saving', () => {
             // Intercept the API call to add a movie
-            cy.intercept('POST', '/api/movies', {
-                statusCode: 201,
-                body: {
-                    id: 1,
-                    title: 'New Movie',
-                    year: '2023',
-                    studio: 'Test Studio',
-                    watched: true,
-                    rating: 8
+            cy.intercept(
+                'POST',
+                /^\/api\/movies\/[0-9a-fA-F-]{36}$/,
+                {
+                    statusCode: 201,
+                    body: {
+                        id: 'new-movie-id',
+                        title: 'New Movie',
+                        year: 2023,
+                        studio: 'Test Studio',
+                        watched: false,
+                        rating: 8,
+                    }
                 }
-            }).as('addMovie');
+            ).as('addMovie');
 
             // Open the modal first
             cy.get('[data-id="ma-button-add-movie"]').click();
@@ -157,7 +170,7 @@ describe('Upsert Movies Modal', () => {
                 statusCode: 200,
                 body: [
                     {
-                        id: '1',
+                        id: 'new-movie-id',
                         title: 'New Movie',
                         year: '2023',
                         studio: 'Test Studio',
@@ -188,18 +201,25 @@ describe('Upsert Movies Modal', () => {
 
     context('when updating an existing movie', () => {
         beforeEach(() => {
+            // Wait for the movies to be loaded
+            cy.wait('@getMovies');
+
             // Add a movie to update later
-            cy.intercept('POST', '/api/movies', {
-                statusCode: 201,
-                body: {
-                    id: '1',
-                    title: 'Existing Movie',
-                    year: '2022',
-                    studio: 'Test Studio',
-                    watched: false,
-                    rating: 5
+            cy.intercept(
+                'POST',
+                /^\/api\/movies\/[0-9a-fA-F-]{36}$/,
+                {
+                    statusCode: 201,
+                    body: {
+                        id: '1',
+                        title: 'Existing Movie',
+                        year: '2022',
+                        studio: 'Test Studio',
+                        watched: false,
+                        rating: 5
+                    }
                 }
-            }).as('addMovie');
+            ).as('addMovie');
 
             // Open the modal to add a movie
             cy.get('[data-id="ma-button-add-movie"]').click();
@@ -210,6 +230,12 @@ describe('Upsert Movies Modal', () => {
             cy.get('#formBasicStudio').type('Test Studio');
             cy.get('[data-id="ma-checkbox-watched"] input[type="checkbox"]').uncheck();
             cy.get('[aria-label="5 stars"]').click(); // Click on the 5th star for rating
+
+            // Click the save button
+            cy.get('[data-id="ma-modal-upsert-movie-save"').click();
+
+            // Wait for the movie to be added
+            cy.wait('@addMovie').its('response.statusCode').should('eq', 201);
 
             // setup intercept for the reload of data call
             cy.intercept('GET', '/api/movies', {
@@ -225,12 +251,6 @@ describe('Upsert Movies Modal', () => {
                     }
                 ]
             }).as('reloadMovies');
-
-            // Click the save button
-            cy.get('[data-id="ma-modal-upsert-movie-save"').click();
-
-            // Wait for the movie to be added
-            cy.wait('@addMovie').its('response.statusCode').should('eq', 201);
         });
 
         it('should open the modal with existing movie details when a movie is selected', () => {
@@ -296,7 +316,7 @@ describe('Upsert Movies Modal', () => {
 
             // Click the save button
             cy.get('[data-id="ma-modal-upsert-movie-save"').click();
-            
+
             // Assert that the modal is closed
             cy.get('.modal-content').should('not.exist');
             // Assert that the movie list is updated

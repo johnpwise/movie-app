@@ -7,7 +7,7 @@ describe('Movies View', () => {
         // Visit the base URL before each test
         cy.visit('/movies');
     });
-    
+
     it('should display the movies view', () => {
         // Assert
         cy.get('.ma-movies', { timeout: 10000 })
@@ -38,7 +38,20 @@ describe('Movies View', () => {
     });
 
     context('when no movie data is returned from the API or store', () => {
+        beforeEach(() => {
+            // Mock the API response or store data to return a list of movies
+            cy.intercept('GET', '/api/movies', {
+                statusCode: 200,
+                body: []
+            }).as('getMovies');
+
+            cy.visit('/movies');
+        });
+
         it('should display a film icon and a message indicating no movies are available', () => {
+            // Arrange
+            cy.wait('@getMovies');
+
             // Assert
             cy.get('.bi-film')
                 .should('exist')
@@ -66,6 +79,7 @@ describe('Movies View', () => {
                     { id: '2', title: 'The Matrix', year: 1999, studio: 'Warner Bros.', watched: false, rating: 10 }
                 ]
             }).as('getMovies');
+
             cy.visit('/movies');
         });
 
@@ -104,10 +118,21 @@ describe('Movies View', () => {
             }).as('getMovies');
 
             // Mock the API response for adding a movie
-            cy.intercept('POST', '/api/movies', {
-                statusCode: 201,
-                body: { id: 'new-movie-id', title: 'New Movie', year: 2023, studio: 'Test Studio', watched: false, rating: 8 }
-            }).as('addMovie');
+            cy.intercept(
+                'POST',
+                /^\/api\/movies\/[0-9a-fA-F-]{36}$/,
+                {
+                    statusCode: 201,
+                    body: {
+                        id: 'new-movie-id',
+                        title: 'New Movie',
+                        year: 2023,
+                        studio: 'Test Studio',
+                        watched: false,
+                        rating: 8,
+                    }
+                }
+            ).as('addMovie');
         });
 
         it('should open the modal when "Add Movie" button is clicked', () => {
@@ -121,17 +146,33 @@ describe('Movies View', () => {
         });
 
         it('should allow entering movie details and saving', () => {
+            // Arrange
+            cy.wait('@getMovies');
+            
+            cy.intercept('GET', '/api/movies', {
+                statusCode: 200,
+                body: [
+                    { id: '1', title: 'New Movie', year: 2023, studio: 'Test Studio', watched: false, rating: 8 }
+                ]
+            }).as('getMoviesAfterPost');
+
             // Open the modal
             cy.get('[data-id="ma-button-add-movie"]').click();
 
             // Fill in movie details
             cy.get('input[name="title"]').type('New Movie');
-            cy.get('input[name="year"]').type('2023');
+            cy.get('input[name="year"]').clear().type('2023');
             cy.get('input[name="studio"]').type('Test Studio');
-            cy.get('input[name="rating"]').type('8');
+
+            // Select a star rating
+            cy.get('[data-id="ma-rating-widget"] i.bi-star').first().click(); // Select 1 star rating
 
             // Save the movie
-            cy.get('[data-id="ma-modal-upsert-movie"] button[type="submit"]').click();
+            cy.get('[data-id="ma-modal-upsert-movie-save"]').click();
+
+            // cy.wait(2000); // Wait for the API call to complete
+            cy.wait('@addMovie');
+            cy.wait('@getMoviesAfterPost');
 
             // Assert the modal closes and the new movie appears in the list
             cy.get('[data-id="ma-modal-upsert-movie"]').should('not.exist');

@@ -7,12 +7,12 @@
 }
 
 .ma-title {
-    @apply flex flex-col gap-2 p-4 rounded-lg bg-white dark:bg-gray-800;
+    @apply flex flex-col gap-2 p-4 rounded-lg bg-white dark:bg-gray-300;
     border: 1px solid #e5e7eb;
 }
 
 .ma-tile-content {
-    @apply flex-1;
+    @apply flex flex-1 flex-col text-gray-500 dark:text-gray-400;
     padding-left: 1rem;
 }
 
