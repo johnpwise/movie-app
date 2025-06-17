@@ -1,4 +1,13 @@
+import { useEffect, useState } from "react";
+
+/// Stores
 import { useMovieStore } from "../../stores/useMovieStore";
+
+/// Services
+import { getAllMoviesAsync } from '../../services/movieService';
+
+/// Types
+import type { IMovie } from '../../features/movies/types';
 
 /// Components
 import Tile from "../../features/dashboard/tiles/tile";
@@ -11,11 +20,24 @@ export async function loader() {
 
 function Dashboard() {
     /// State
-    const movies = useMovieStore(state => state.movies);
+    const [movies, setMovies] = useState<IMovie[]>([]);
+
+    /// UI State
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
 
     /// Constants
     const watchedCount = movies.filter(movie => movie.watched).length;
     const unwatchedCount = movies.length - watchedCount;
+
+    /// Effects
+    useEffect(() => {
+        setLoading(true);
+        getAllMoviesAsync()
+            .then(setMovies)
+            .catch((err) => setError(err.message))
+            .finally(() => setLoading(false));
+    }, []);
 
     /// Render
     return (
