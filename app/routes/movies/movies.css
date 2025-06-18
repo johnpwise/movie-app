@@ -5,6 +5,4 @@
 
 .ma-movies h1 {
     @apply: text-gray-500 dark:text-gray-300 font-semibold mb-1rem;
-    /* font-size: 2rem;
-    margin-bottom: 1rem; */
 }

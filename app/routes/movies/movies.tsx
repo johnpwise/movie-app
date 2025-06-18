@@ -13,6 +13,9 @@ import MovieList from '../../features/movies/movieList/movieList';
 import BaseModal from '../../components/modals/baseModal';
 import UpsertMovieForm from '../../features/movies/upsertMovieForm/upsertMovieForm';
 
+import Speedometer from '../../components/widgets/speedometer/speedometer';
+import TorusGauge from '../../components/widgets/torusGauge/torusGauge';
+
 /// Initial movie state
 const initialMovie: IMovie = {
     id: '',
@@ -96,6 +99,78 @@ function Movies() {
             </BaseModal>
 
             <MovieList onSelect={handleSelectMovie} reloadKey={reloadKey} />
+
+            <div className="mt-8">
+                {/* <h2 className="text-lg font-semibold mb-4">Movie Statistics</h2> */}
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 ml-auto mr-auto max-w-6xl vertical-center">
+                    <TorusGauge 
+                        value={29}
+                        lowerThreshold={25}
+                        upperThreshold={75}
+                        thickness={14}
+                        demoMode={true} />
+
+                    <TorusGauge 
+                        value={29}
+                        lowerThreshold={25}
+                        upperThreshold={75}
+                        thickness={14}
+                        demoMode={true} />
+
+                    <TorusGauge 
+                        value={29}
+                        lowerThreshold={25}
+                        upperThreshold={75}
+                        thickness={14}
+                        demoMode={true} />
+
+                    <Speedometer 
+                        value={5} 
+                        min={0} 
+                        max={10} 
+                        scale={1.0} 
+                        gaugeText='MPH' 
+                        demoMode={true} />
+
+                    <Speedometer 
+                        value={5} 
+                        min={0} 
+                        max={10} 
+                        scale={1.0} 
+                        gaugeText='MPH' 
+                        demoMode={true} />
+
+                    <Speedometer 
+                        value={5} 
+                        min={0} 
+                        max={10} 
+                        scale={1.0} 
+                        gaugeText='MPH' 
+                        demoMode={true} />
+                        
+                    <TorusGauge 
+                        value={29}
+                        lowerThreshold={25}
+                        upperThreshold={75}
+                        thickness={14}
+                        demoMode={true} />
+
+                    <TorusGauge 
+                        value={29}
+                        lowerThreshold={25}
+                        upperThreshold={75}
+                        thickness={14}
+                        demoMode={true} />
+
+                    <TorusGauge 
+                        value={29}
+                        lowerThreshold={25}
+                        upperThreshold={75}
+                        thickness={14}
+                        demoMode={true} />
+                </div>
+            </div>
         </div>
     );
 }
