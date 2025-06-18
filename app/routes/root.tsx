@@ -1,6 +1,5 @@
 // routes/root.tsx
 import {
-    Links,
     Meta,
     Outlet,
     ScrollRestoration,
@@ -24,10 +23,9 @@ export function links() {
 
 export default function RootLayout() {
     return (
-        <html lang="en">
+        <html lang="en" data-bs-theme="auto">
             <head>
                 <Meta />
-                <Links />
             </head>
             <body>
                 <Outlet />
