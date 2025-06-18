@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useMotionValue, animate, useAnimationFrame } from "framer-motion";
 
+// CSS
+import "./torusGauge.css";
+
 type TorusGaugeProps = {
     value: number; // 0-100 (percentage)
     lowerThreshold?: number; // e.g. 30
@@ -51,18 +54,19 @@ export const TorusGauge: React.FC<TorusGaugeProps> = ({
     // Animated value using Framer Motion
     const animated = useMotionValue(0);
 
-    // function to randomly update the state value of demoValue 0-100
-    const updatedemoValue = () => {
-        const randomValue = Math.floor(Math.random() * 101);
-        setDemoValue(randomValue);
-    };
-
-    // useEffect to update the demoValue every 10 seconds
+    // Update demoValue every 1-10s if demoMode is true
     useEffect(() => {
-        const interval = setInterval(updatedemoValue, Math.floor(Math.random() * 10000) + 1000);
+        if (!demoMode) return;
+        const updatedemoValue = () => setDemoValue(Math.floor(Math.random() * 101));
+        updatedemoValue(); // Show first random value immediately
+        const interval = setInterval(
+            updatedemoValue,
+            Math.floor(Math.random() * 30000) + 1000 // 1–10s
+        );
         return () => clearInterval(interval);
-    }, []);
+    }, [demoMode]);
 
+    // Animate the value change
     useEffect(() => {
         animate(animated, pct, { duration, ease: "easeInOut" });
     }, [pct, animated, duration]);
@@ -81,7 +85,7 @@ export const TorusGauge: React.FC<TorusGaugeProps> = ({
             width={size}
             height={size}
             viewBox={`0 0 ${size} ${size}`}
-            className="block"
+            className="torus-gauge"
             style={{ 
                 display: "inline-block", 
                 transform: `scale(${scale})`,

@@ -15,6 +15,7 @@ import UpsertMovieForm from '../../features/movies/upsertMovieForm/upsertMovieFo
 
 import Speedometer from '../../components/widgets/speedometer/speedometer';
 import TorusGauge from '../../components/widgets/torusGauge/torusGauge';
+import ArcGauge from '../../components/widgets/arcGauge/arcGauge';
 
 /// Initial movie state
 const initialMovie: IMovie = {
@@ -109,6 +110,8 @@ function Movies() {
                         lowerThreshold={25}
                         upperThreshold={75}
                         thickness={14}
+                        scale={0.75} 
+                        colors={['#4caf50', '#ff9800', '#f44336']}
                         demoMode={true} />
 
                     <TorusGauge 
@@ -116,20 +119,40 @@ function Movies() {
                         lowerThreshold={25}
                         upperThreshold={75}
                         thickness={14}
+                        scale={0.75} 
                         demoMode={true} />
 
                     <TorusGauge 
                         value={29}
-                        lowerThreshold={25}
-                        upperThreshold={75}
+                        lowerThreshold={33}
+                        upperThreshold={66}
                         thickness={14}
+                        scale={0.75} 
+                        colors={['#34ebeb', '#ffeb34', '#eb3434']}
+                        demoMode={true} />
+
+                    <ArcGauge 
+                        value={10.5}
+                        scale={0.75}
+                        demoMode={true} />
+
+                    <ArcGauge 
+                        value={10.5}
+                        scale={0.75}
+                        color="#4caf50"
+                        demoMode={true} />
+
+                    <ArcGauge 
+                        value={10.5}
+                        scale={0.75}
+                        color="#ff9800"
                         demoMode={true} />
 
                     <Speedometer 
                         value={5} 
                         min={0} 
                         max={10} 
-                        scale={1.0} 
+                        scale={0.75} 
                         gaugeText='MPH' 
                         demoMode={true} />
 
@@ -137,37 +160,16 @@ function Movies() {
                         value={5} 
                         min={0} 
                         max={10} 
-                        scale={1.0} 
-                        gaugeText='MPH' 
+                        scale={0.75} 
+                        gaugeText='KPH' 
                         demoMode={true} />
 
                     <Speedometer 
                         value={5} 
                         min={0} 
                         max={10} 
-                        scale={1.0} 
+                        scale={0.75} 
                         gaugeText='MPH' 
-                        demoMode={true} />
-                        
-                    <TorusGauge 
-                        value={29}
-                        lowerThreshold={25}
-                        upperThreshold={75}
-                        thickness={14}
-                        demoMode={true} />
-
-                    <TorusGauge 
-                        value={29}
-                        lowerThreshold={25}
-                        upperThreshold={75}
-                        thickness={14}
-                        demoMode={true} />
-
-                    <TorusGauge 
-                        value={29}
-                        lowerThreshold={25}
-                        upperThreshold={75}
-                        thickness={14}
                         demoMode={true} />
                 </div>
             </div>

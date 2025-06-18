@@ -1,6 +1,9 @@
 import React, { useMemo, useEffect, useState } from "react";
 import { useMotionValue, animate, useAnimationFrame } from "framer-motion";
 
+// CSS
+import "./speedometer.css";
+
 const arcBgClass =
     "stroke-gray-200 dark:stroke-gray-700";
 const tickClass = "stroke-gray-400 dark:stroke-gray-500";
@@ -46,17 +49,17 @@ const Speedometer: React.FC<SpeedometerProps> = ({
 
     const [demoValue, setDemoValue] = useState(0);
 
-    // function to randomly update the state value of demoValue
-    const updatedemoValue = () => {
-        setDemoValue(Math.floor(Math.random() * 10) + 1);
-    };
-
-    // useEffect to update the demoValue every 2 seconds
+    // Update demoValue every 1-10s if demoMode is true
     useEffect(() => {
-        const interval = setInterval(updatedemoValue, Math.floor(Math.random() * 2000) + 1000);
+        if (!demoMode) return;
+        const updatedemoValue = () => setDemoValue(Math.floor(Math.random() * 10) + 1);
+        updatedemoValue(); // Show first random value immediately
+        const interval = setInterval(
+            updatedemoValue,
+            Math.floor(Math.random() * 30000) + 1000 // 1–10s
+        );
         return () => clearInterval(interval);
-    }, []);
-
+    }, [demoMode]);
 
     // Clamp value and calculate angle
     const clamp = (v: number) => Math.max(min, Math.min(max, v));
@@ -146,7 +149,7 @@ const Speedometer: React.FC<SpeedometerProps> = ({
             width={width}
             height={height}
             viewBox={`0 0 ${width} ${height}`}
-            className="block"
+            className="speedometer-gauge"
             style={{ 
                 transform: `scale(${scale})`,
                 marginLeft: "auto",
