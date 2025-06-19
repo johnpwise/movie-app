@@ -9,7 +9,7 @@ type ArcGaugeProps = {
     size?: number; // px (diameter)
     thickness?: number; // px
     scale?: number; // scale factor for the gauge
-    color?: string; // arc color (hex or Tailwind 'stroke-blue-500')
+    color?: string; // arc color (hex)
     backgroundColor?: string; // unfilled arc color
     label?: string | ((val: number) => React.ReactNode);
     duration?: number; // animation seconds
@@ -61,13 +61,10 @@ export const ArcGauge: React.FC<ArcGaugeProps> = ({
     // Arc dash math: full arc is 180°, so use half the circle circumference
     const arcLen = Math.PI * radius;
     const filledLen = (animatedPct / 100) * arcLen;
-    const emptyLen = arcLen - filledLen;
+    // const emptyLen = arcLen - filledLen;
 
     // Center label y
     const labelY = cy + thickness * 0.3;
-
-    // Determine stroke color (hex or Tailwind)
-    const isTailwind = typeof color === "string" && color.startsWith("stroke-");
 
     return (
         <svg width={size} height={size / 1} 
@@ -93,8 +90,7 @@ export const ArcGauge: React.FC<ArcGaugeProps> = ({
                 cy={cy}
                 r={radius}
                 fill="none"
-                stroke={isTailwind ? undefined : color}
-                className={isTailwind ? color : undefined}
+                stroke={color}
                 strokeWidth={thickness}
                 strokeDasharray={`${filledLen} ${arcLen - filledLen + circumference}`}
                 strokeDashoffset={0}
@@ -115,7 +111,7 @@ export const ArcGauge: React.FC<ArcGaugeProps> = ({
             >
                 {label
                     ? typeof label === "function"
-                        ? label(animatedPct)
+                        ? label(parseFloat(animatedPct.toFixed(1)))
                         : label
                     : `${animatedPct.toFixed(1)}%`}
             </text>

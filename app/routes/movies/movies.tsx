@@ -16,6 +16,8 @@ import UpsertMovieForm from '../../features/movies/upsertMovieForm/upsertMovieFo
 import Speedometer from '../../components/widgets/speedometer/speedometer';
 import TorusGauge from '../../components/widgets/torusGauge/torusGauge';
 import ArcGauge from '../../components/widgets/arcGauge/arcGauge';
+import ColumnGauge from '../../components/widgets/columnGauge/columnGauge';
+import BarGauge from '../../components/widgets/barGauge/barGauge';
 
 /// Initial movie state
 const initialMovie: IMovie = {
@@ -134,18 +136,24 @@ function Movies() {
                     <ArcGauge 
                         value={10.5}
                         scale={0.75}
+                        label={(value: number) => `${value}°C`}
                         demoMode={true} />
 
                     <ArcGauge 
                         value={10.5}
                         scale={0.75}
                         color="#4caf50"
+                        label={(value: number) => `£${value}`}
                         demoMode={true} />
 
-                    <ArcGauge 
-                        value={10.5}
-                        scale={0.75}
-                        color="#ff9800"
+                    <BarGauge
+                        value={75}
+                        target={80}
+                        total={100}
+                        width={300}
+                        height={50}
+                        scale={1.5}
+                        duration={1.5}
                         demoMode={true} />
 
                     <Speedometer 
@@ -164,12 +172,14 @@ function Movies() {
                         gaugeText='KPH' 
                         demoMode={true} />
 
-                    <Speedometer 
-                        value={5} 
-                        min={0} 
-                        max={10} 
-                        scale={0.75} 
-                        gaugeText='MPH' 
+                    <ColumnGauge
+                        value={85}
+                        target={70}
+                        total={100}
+                        width={68}
+                        height={200}
+                        scale={1.5}
+                        duration={1.5}
                         demoMode={true} />
                 </div>
             </div>
