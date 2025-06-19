@@ -13,8 +13,15 @@ import MovieList from '../../features/movies/movieList/movieList';
 import BaseModal from '../../components/modals/baseModal';
 import UpsertMovieForm from '../../features/movies/upsertMovieForm/upsertMovieForm';
 
-import Speedometer from '../../components/widgets/speedometer/speedometer';
-import TorusGauge from '../../components/widgets/torusGauge/torusGauge';
+import {
+    ArcGauge,
+    BarGauge,
+    ColumnGauge,
+    Speedometer,
+    TorusGauge,
+} from 'react-dashboard-gauges';
+
+import { LineChartWidget } from '../../components/widgets/lineChart/lineChart';
 
 /// Initial movie state
 const initialMovie: IMovie = {
@@ -103,71 +110,95 @@ function Movies() {
             <div className="mt-8">
                 {/* <h2 className="text-lg font-semibold mb-4">Movie Statistics</h2> */}
 
+
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 ml-auto mr-auto max-w-6xl vertical-center">
-                    <TorusGauge 
+                    <LineChartWidget
+                        data={[
+                            { time: '10:00', load: 30 },
+                            { time: '10:05', load: 45 },
+                            { time: '10:10', load: 20 },
+                            { time: '10:15', load: 60 },
+                            { time: '10:20', load: 50 },
+                            { time: '10:25', load: 70 },
+                            { time: '10:30', load: 80 },
+                        ]}
+                        height={300}
+                        width={400}
+                        xKey="time"
+                        yKey="load"
+                        xAxisLabel="Time (HH:MM)"
+                        yAxisLabel="CPU Load (%)"
+                        windowSize={12}
+                        demoMode={true}
+                    />
+
+                    <TorusGauge
                         value={29}
                         lowerThreshold={25}
                         upperThreshold={75}
                         thickness={14}
+                        scale={1.0}
                         demoMode={true} />
 
-                    <TorusGauge 
+                    <TorusGauge
                         value={29}
-                        lowerThreshold={25}
-                        upperThreshold={75}
+                        lowerThreshold={33}
+                        upperThreshold={66}
                         thickness={14}
+                        scale={1.0}
+                        colors={['#34ebeb', '#ffeb34', '#eb3434']}
                         demoMode={true} />
 
-                    <TorusGauge 
-                        value={29}
-                        lowerThreshold={25}
-                        upperThreshold={75}
-                        thickness={14}
+                    <ArcGauge
+                        value={10.5}
+                        scale={1.0}
+                        label={(value: number) => `${value}°C`}
                         demoMode={true} />
 
-                    <Speedometer 
-                        value={5} 
-                        min={0} 
-                        max={10} 
-                        scale={1.0} 
-                        gaugeText='MPH' 
+                    <ArcGauge
+                        value={10.5}
+                        scale={1.0}
+                        color="#4caf50"
+                        label={(value: number) => `£${value}`}
                         demoMode={true} />
 
-                    <Speedometer 
-                        value={5} 
-                        min={0} 
-                        max={10} 
-                        scale={1.0} 
-                        gaugeText='MPH' 
+                    <BarGauge
+                        value={75}
+                        target={50}
+                        total={100}
+                        width={300}
+                        height={50}
+                        scale={1.0}
+                        fillColor='#03f8fc'
+                        overColor='#fc03ca'
+                        duration={1.5}
                         demoMode={true} />
 
-                    <Speedometer 
-                        value={5} 
-                        min={0} 
-                        max={10} 
-                        scale={1.0} 
-                        gaugeText='MPH' 
-                        demoMode={true} />
-                        
-                    <TorusGauge 
-                        value={29}
-                        lowerThreshold={25}
-                        upperThreshold={75}
-                        thickness={14}
+                    <Speedometer
+                        value={5}
+                        min={0}
+                        max={10}
+                        scale={1.0}
+                        gaugeText='MPH'
                         demoMode={true} />
 
-                    <TorusGauge 
-                        value={29}
-                        lowerThreshold={25}
-                        upperThreshold={75}
-                        thickness={14}
+                    <Speedometer
+                        value={5}
+                        min={0}
+                        max={10}
+                        scale={1.0}
+                        gaugeText='KPH'
                         demoMode={true} />
 
-                    <TorusGauge 
-                        value={29}
-                        lowerThreshold={25}
-                        upperThreshold={75}
-                        thickness={14}
+                    <ColumnGauge
+                        value={85}
+                        target={70}
+                        total={100}
+                        width={68}
+                        height={200}
+                        scale={1.0}
+                        duration={1.5}
                         demoMode={true} />
                 </div>
             </div>
